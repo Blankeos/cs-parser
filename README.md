@@ -1,12 +1,26 @@
 # Parser in C#
 
-A parser implemented in C# as a final requirement for my Programming Languages class for Dr. Felipe P. Vista IV.
+_(WIP)_
+
+A parser implemented in C# as a final requirement for my Programming Languages class for **Dr. Felipe P. Vista IV**.
+
+Demonstrates compiler design theory from:
+
+```
+Scanner (Lexical Analysis) -> Parser (Syntax Analysis)
+```
+
+Progress:
+
+- [x] Scanner Tokenization
+- [ ] Parse Tree
+- [ ] Expression Output
 
 ```
 Written by:
-- Carlo Antonio T. Taleon
-- Glecy S. Elizalde
-- Christopher Joseph T. Rubinos
+- 🤓 Carlo Antonio T. Taleon
+- 👧 Glecy S. Elizalde
+- 🤠 Christopher Joseph T. Rubinos
 ```
 
 ## Get started
@@ -16,12 +30,15 @@ Written by:
 1. Clone this repo and change your directory
 
 ```sh
-git clone <repolink>
-cd parser-csharp
+# >
+git clone https://github.com/Blankeos/cs-parser
+cd cs-parser
+# cs-parser>
 ```
 
 2. Run the project in your terminal
 
-```
+```sh
+# cs-parser>
 dotnet run
 ```
