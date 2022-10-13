@@ -23,7 +23,7 @@ namespace CSParser
 
         public override string ToString()
         {
-            return $"({this.tokenType}, {this.value})";
+            return $"<{this.tokenType}: {this.value}>";
         }
     }
     class Parser
@@ -51,6 +51,11 @@ namespace CSParser
                         c = charStream[i];
                     }
                     tokens.Add(new Token(TokenEnum.NUMBER, number));
+                    i--; // Subtract the indexer because that means the last lookAhead failed, so put the indexer back
+                }
+                else if (Regex.Match(c.ToString(), @"\(|\)").Success)
+                {
+                    tokens.Add(new Token(TokenEnum.PUNCTUATION, c.ToString()));
                 }
             }
             return tokens;
@@ -69,7 +74,7 @@ namespace CSParser
         static void Main(string[] args)
         {
             Console.WriteLine("== Parser in C# by Taleon, Elizalde, Rubinos ==");
-            List<Token> tokens = Parser.Lex("3 + 4 - 500");
+            List<Token> tokens = Parser.Lex("(3 + 4) - 500");
             Parser.PrintTokens(tokens);
         }
     }
