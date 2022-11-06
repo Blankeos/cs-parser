@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -23,7 +24,7 @@ namespace CSParser
 
         public override string ToString()
         {
-            return $"<{this.tokenType}: {this.value}>";
+            return $"<{this.tokenType}: {this.value} >";
         }
     }
     class Parser
@@ -74,7 +75,13 @@ namespace CSParser
         static void Main(string[] args)
         {
             Console.WriteLine("== Parser in C# by Taleon, Elizalde, Rubinos ==");
-            List<Token> tokens = Parser.Lex("(3 + 4) - 500");
+
+            const string FILE_PATH = "./input.txt";
+            if (!File.Exists(FILE_PATH)) return;
+            string input = File.ReadAllText(FILE_PATH);
+
+            List<Token> tokens = Parser.Lex(input);
+
             Parser.PrintTokens(tokens);
         }
     }
