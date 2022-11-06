@@ -1,0 +1,15 @@
+% filename: input.carlo \nwow\n damn\n \r
+
+create age = 21
+
+say age
+% 21
+
+say age - 1
+% 20
+
+func sayHello(name, age)
+    say "Hello " + name + "! You are " + age
+
+sayHello "Carlo" 21
+% Hello Carlo! You are 21
