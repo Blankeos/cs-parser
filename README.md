@@ -42,3 +42,34 @@ cd cs-parser
 # cs-parser>
 dotnet run
 ```
+
+## Introducing: The 🤓 "Carlo" Programming Language
+
+It's basically like you're talking to some dude named Carlo.
+
+### Features
+
+- [x] Variables with `create`
+- [x] Print to console with `say`
+- [x] Arithmetic `+` `-` `*` `/`
+- [x] Comments with `%`
+
+### Example usage
+
+```m
+% filename: input.carlo
+
+create age = 21
+
+say age
+% 21
+
+say age - 1
+% 20
+
+func sayHello(name, age)
+    say "Hello " + name + "! You are " + age
+
+sayHello "Carlo" 21
+% Hello Carlo! You are 21
+```
