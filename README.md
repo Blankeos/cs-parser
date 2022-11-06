@@ -2,7 +2,7 @@
 
 _(WIP)_
 
-A parser implemented in C# as a final requirement for my Programming Languages class for **Dr. Felipe P. Vista IV**.
+A parser implemented in C# as a final requirement for my CCS 238 Programming Languages class for **Dr. Felipe P. Vista IV**.
 
 Demonstrates compiler design theory from:
 
