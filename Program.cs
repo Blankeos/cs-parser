@@ -16,8 +16,8 @@ namespace CSParser
             string[] lines = File.ReadAllLines(FILE_PATH);
 
             List<Token> tokens = Lexer.LexLines(lines);
-
-            // Lexer.PrintTokens(tokens);
+            Console.WriteLine($"Lexed ({tokens.Count}) tokens");
+            Lexer.PrintTokens(tokens);
         }
     }
 }

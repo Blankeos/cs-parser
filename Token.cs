@@ -7,6 +7,7 @@ namespace CSParser
         SAY, // say
         FUNCTION, // func
         PARENTHESIS, // (, )
+        ASSIGN, // =
         OPERATOR, // +, -, *, /
         NUMBER, // 21
         STRING, // "Hello"
@@ -30,6 +31,34 @@ namespace CSParser
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Tokens for Math
     enum TokenEnum
