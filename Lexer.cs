@@ -7,14 +7,14 @@ namespace CSParser
 {
     class Lexer
     {
-        // For multiple lines
+        # region Static Functions
         public static List<Token> LexLines(string[] inputLines)
         {
             List<Token> tokens = new List<Token>();
 
             foreach (string charStream in inputLines)
             {
-                tokens.Concat(LexString(charStream));
+                tokens = tokens.Concat(LexString(charStream)).ToList();
             }
 
             return tokens;
@@ -23,51 +23,113 @@ namespace CSParser
         // For one line/string
         public static List<Token> LexString(string charStream)
         {
-
             List<Token> tokens = new List<Token>();
 
             // Check if comment == %, returns an empty token list
-            if (charStream[0] == '%') return tokens;
+            if (charStream == "" || charStream[0] == '%') return tokens;
 
-            // Start searching if line is not a comment
             for (int i = 0; i < charStream.Length; i++)
             {
                 char c = charStream[i];
 
-                // Find 'create'
-                if (c == '%')
+                string create = LookAheadKeyword("create", ref i, charStream);
+                if (create != null) tokens.Add(new Token(TokenType.CREATE, "create"));
+                string say = LookAheadKeyword("say", ref i, charStream);
+                if (say != null) tokens.Add(new Token(TokenType.SAY, "say"));
+
+                if (c == '=')
                 {
-                    // i = 
+                    // Add lookahead for equality '==' here
+                    tokens.Add(new Token(TokenType.ASSIGN, "="));
                 }
-                if (c == 'c')
+                if (Regex.Match(c.ToString(), @"\+|-|\*|\/").Success)
                 {
-                    if (LookAheadKeywordIsMatched("create", i, charStream))
-                    {
-                        tokens.Add(new Token(TokenType.CREATE, "create"));
-                    }
+                    tokens.Add(new Token(TokenType.OPERATOR, c.ToString()));
+                }
+
+                string identifier = LookAhead(ref i, charStream, @"[a-z]|[A-Z]|_", @"[a-z]|[A-Z]|_|[0-9]");
+                if (identifier != null)
+                {
+                    tokens.Add(new Token(TokenType.IDENTIFIER, identifier));
+                    continue;
+                }
+                string number = LookAhead(ref i, charStream, @"[0-9]", @"[0-9]");
+                if (number != null)
+                {
+                    tokens.Add(new Token(TokenType.NUMBER, number));
                 }
             }
             return tokens;
         }
+        #endregion
 
+        # region Utility Functions
         private static bool LookAheadKeywordIsMatched(string keyword, int currentIndex, string charStream)
         {
             for (int i = 0; i < keyword.Length; i++)
             {
-                if (charStream[currentIndex] + i == keyword[i])
+                if (i >= charStream.Length) break;
+                if (charStream[currentIndex + i] != keyword[i])
                 {
-                    continue;
+                    return false;
                 }
-                return false;
             }
             return true;
         }
 
-        // private static int LookBeyondComment(int currentIndex, string charStream) {
-        //     for (int i = 0; i < charStream.Length; i++) {
+        private static string LookAheadKeyword(string keyword, ref int currentIndex, string charStream)
+        {
+            int startIndex = currentIndex;
 
-        //     }
-        // }
+            // Trigger for LookAhead
+            if (charStream[startIndex] == keyword[0])
+            {
+                for (int i = 0; i < keyword.Length; i++)
+                {
+                    if (charStream[currentIndex] != keyword[i])
+                    {
+                        currentIndex = startIndex;
+                        return null;
+                    }
+                    currentIndex++;
+                    if (currentIndex >= charStream.Length) break;
+                }
+                // Every index matched, so successful, let's return keyword.
+                return keyword;
+            }
+
+            currentIndex = startIndex;
+            return null;
+        }
+
+        private static string LookAhead(ref int currentIndex, string charStream, string startPattern, string loopPattern)
+        {
+            string result = "";
+
+            // Look Ahead Entry
+            if (!Regex.Match(charStream[currentIndex].ToString(), startPattern).Success) return null;
+
+            // Look Ahead Loop
+            for (int j = currentIndex; j < charStream.Length; j++)
+            {
+                if (Regex.Match(charStream[j].ToString(), loopPattern).Success)
+                {
+                    result += charStream[j];
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // Success
+            if (result.Length > 0)
+            {
+                currentIndex += result.Length - 1;
+                return result;
+            }
+            return null;
+        }
 
         public static void PrintTokens(List<Token> tokens)
         {
@@ -76,6 +138,7 @@ namespace CSParser
                 Console.WriteLine(tokens[i]);
             }
         }
+        # endregion
     }
 }
 
