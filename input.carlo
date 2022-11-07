@@ -1,15 +1,5 @@
-% filename: input.carlo \nwow\n damn\n \r
+% filename: input.carlo \n some comments here
 
-create age = 21
-
+create age_3=2002-1
 say age
-% 21
-
-say age - 1
-% 20
-
-func sayHello(name, age)
-    say "Hello " + name + "! You are " + age
-
-sayHello "Carlo" 21
-% Hello Carlo! You are 21
+wow = 200-2
